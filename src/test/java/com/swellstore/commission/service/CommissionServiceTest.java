@@ -25,39 +25,39 @@ class CommissionServiceTest {
     }
 
     @Test
-    @DisplayName("TC-002 | R2: salaried + regular + bonus + $20 → $0.00")
+    @DisplayName("TC-002 | R2: salaried + regular + bonus + $1000 → $0.00")
     void tc002_r2_regularCustomer_bonus_returnsZero() {
-        assertEquals(0.0, calc("salaried", "regular", "bonus", 20.0), DELTA);
+        assertEquals(0.0, calc("salaried", "regular", "bonus", 1000.0), DELTA);
     }
 
     @Test
-    @DisplayName("TC-003 | R3: salaried + non-regular + bonus + $300 → $15.00 (5%)")
-    void tc003_r3_salaried_nonRegular_bonus_price300_returns15() {
-        assertEquals(15.0, calc("salaried", "non-regular", "bonus", 300.0), DELTA);
+    @DisplayName("TC-003 | R3: salaried + non-regular + bonus + $1000 → $50.00 (5%)")
+    void tc003_r3_salaried_nonRegular_bonus_price1000_returns50() {
+        assertEquals(50.0, calc("salaried", "non-regular", "bonus", 1000.0), DELTA);
     }
 
     @Test
-    @DisplayName("TC-004 | R4: salaried + non-regular + bonus + $8,000 → $25.00 flat")
-    void tc004_r4_salaried_nonRegular_bonus_price8000_returnsFlat25() {
-        assertEquals(25.0, calc("salaried", "non-regular", "bonus", 8000.0), DELTA);
+    @DisplayName("TC-004 | R4: salaried + non-regular + bonus + $10,000 → $25.00 flat")
+    void tc004_r4_salaried_nonRegular_bonus_price10000_returnsFlat25() {
+        assertEquals(25.0, calc("salaried", "non-regular", "bonus", 10000.0), DELTA);
     }
 
     @Test
-    @DisplayName("TC-005 | R5: non-salaried + non-regular + bonus + $500 → $50.00 (10%)")
-    void tc005_r5_nonSalaried_nonRegular_bonus_price500_returns50() {
-        assertEquals(50.0, calc("non-salaried", "non-regular", "bonus", 500.0), DELTA);
+    @DisplayName("TC-005 | R5: non-salaried + non-regular + bonus + $1000 → $100.00 (10%)")
+    void tc005_r5_nonSalaried_nonRegular_bonus_price1000_returns100() {
+        assertEquals(100.0, calc("non-salaried", "non-regular", "bonus", 1000.0), DELTA);
     }
 
     @Test
-    @DisplayName("TC-006 | R6: non-salaried + non-regular + bonus + $8,000 → $75.00 flat")
-    void tc006_r6_nonSalaried_nonRegular_bonus_price8000_returnsFlat75() {
-        assertEquals(75.0, calc("non-salaried", "non-regular", "bonus", 8000.0), DELTA);
+    @DisplayName("TC-006 | R6: non-salaried + non-regular + bonus + $10,000 → $75.00 flat")
+    void tc006_r6_nonSalaried_nonRegular_bonus_price10000_returnsFlat75() {
+        assertEquals(75.0, calc("non-salaried", "non-regular", "bonus", 10000.0), DELTA);
     }
 
     @Test
-    @DisplayName("TC-007 | R7: non-salaried + non-regular + other + $5,000 → $500.00 (10%)")
-    void tc007_r7_nonSalaried_nonRegular_other_price5000_returns500() {
-        assertEquals(500.0, calc("non-salaried", "non-regular", "other", 5000.0), DELTA);
+    @DisplayName("TC-007 | R7: non-salaried + non-regular + other + $15,000 → $1500.00 (10%)")
+    void tc007_r7_nonSalaried_nonRegular_other_price15000_returns1500() {
+        assertEquals(1500.0, calc("non-salaried", "non-regular", "other", 15000.0), DELTA);
     }
 
     @Test
@@ -67,9 +67,9 @@ class CommissionServiceTest {
     }
 
     @Test
-    @DisplayName("TC-009 | R9: salaried + non-regular + other + $8,000 → $0.00")
+    @DisplayName("TC-009 | R9: salaried + non-regular + other + $10,000 → $0.00")
     void tc009_r9_salaried_nonRegular_other_returnsZero() {
-        assertEquals(0.0, calc("salaried", "non-regular", "other", 8000.0), DELTA);
+        assertEquals(0.0, calc("salaried", "non-regular", "other", 10000.0), DELTA);
     }
 
     @Test
