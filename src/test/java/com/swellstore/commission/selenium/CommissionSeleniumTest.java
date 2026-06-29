@@ -13,27 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Selenium WebDriver end-to-end tests — Swell Store Commission Calculator.
- *
- * <p>Tests are derived directly from the SWT301 Group 3 Excel template:
- * <ul>
- *   <li>Sheet 04 — Test Cases TC-001 to TC-022 (all 22 cases)</li>
- * </ul>
- *
- * <p><strong>Prerequisites:</strong>
- * <ol>
- *   <li>Run {@code mvn jetty:run} in the {@code swell-commission} directory.</li>
- *   <li>Ensure {@code chromedriver} is on your PATH.</li>
- * </ol>
- *
- * <p><strong>Coverage:</strong>
- * <ul>
- *   <li>TC-001 to TC-009: Decision table rules R1–R9</li>
- *   <li>TC-010 to TC-014: Boundary values VB1–VB5</li>
- *   <li>TC-015 to TC-022: Invalid-input validation IP1–IP7</li>
- * </ul>
- */
 @DisplayName("CommissionCalculator — Selenium UI Tests (TC-001 to TC-022)")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CommissionSeleniumTest {

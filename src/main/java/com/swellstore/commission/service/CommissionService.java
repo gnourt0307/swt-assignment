@@ -2,27 +2,6 @@ package com.swellstore.commission.service;
 
 import com.swellstore.commission.model.CommissionRequest;
 
-/**
- * Pure business-logic service implementing the Swell Store commission
- * decision table (Sections 3 and 7 of the specification).
- *
- * <p>This class is stateless.  The single public method is static and
- * produces no side effects — same inputs always return the same output.</p>
- *
- * <p>Decision-table rules (R1–R9):
- * <pre>
- *  R1  Any        Any         standard  —              $0.00
- *  R2  Any        regular     Any       —              $0.00
- *  R3  salaried   non-regular bonus     price ≤ 1000   5% of price
- *  R4  salaried   non-regular bonus     price > 1000   $25.00 flat
- *  R5  non-sal.   non-regular bonus     price ≤ 1000   10% of price
- *  R6  non-sal.   non-regular bonus     price > 1000   $75.00 flat
- *  R7  non-sal.   non-regular other     price ≤ 10000  10% of price
- *  R8  non-sal.   non-regular other     price > 10000  5% of price
- *  R9  salaried   non-regular other     —              $0.00
- * </pre>
- * </p>
- */
 public class CommissionService {
 
     // ------------------------------------------------------------------ //
@@ -41,16 +20,6 @@ public class CommissionService {
     // Utility class — no instantiation needed.
     private CommissionService() {}
 
-    /**
-     * Calculates the commission for a validated transaction request.
-     *
-     * <p>Pre-condition: {@code req} contains only values that have already
-     * passed servlet-level validation; no further defensive checks are
-     * needed (per spec §7).</p>
-     *
-     * @param req validated commission request
-     * @return commission amount as a {@code double} (≥ 0.0)
-     */
     public static double calculate(CommissionRequest req) {
 
         // ---- R1: Standard item → always $0.00 -------------------------
