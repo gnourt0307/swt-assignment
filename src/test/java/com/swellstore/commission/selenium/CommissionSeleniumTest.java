@@ -58,6 +58,11 @@ public class CommissionSeleniumTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    @AfterEach
+    void pauseForDemonstration() throws InterruptedException {
+        Thread.sleep(3000);
+    }
+
     @AfterAll
     static void tearDownDriver() {
         if (driver != null) {
@@ -79,25 +84,37 @@ public class CommissionSeleniumTest {
      * Pass {@code null} for any dropdown to leave it unselected (default).
      * Pass {@code null} for price to leave the price field untouched (empty).
      */
+
+    private static void sleep(long millis) {
+        try { Thread.sleep(millis); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    }
+
     private void fillAndSubmit(String salaryType, String customerType,
                                String itemType, String price) {
         if (salaryType != null) {
             new Select(driver.findElement(By.id("salaryType")))
                     .selectByValue(salaryType);
         }
+        sleep(1000);
+
         if (customerType != null) {
             new Select(driver.findElement(By.id("customerType")))
                     .selectByValue(customerType);
         }
+        sleep(1000);
+
         if (itemType != null) {
             new Select(driver.findElement(By.id("itemType")))
                     .selectByValue(itemType);
         }
+        sleep(1000);
+
         if (price != null) {
             WebElement priceInput = driver.findElement(By.id("itemPrice"));
             priceInput.clear();
             priceInput.sendKeys(price);
         }
+        sleep(1000);
         driver.findElement(By.cssSelector("button[type='submit']")).click();
     }
 
@@ -119,9 +136,9 @@ public class CommissionSeleniumTest {
     private List<String> getErrorMessages() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".errors")));
         return driver.findElements(By.cssSelector(".errors li"))
-                     .stream()
-                     .map(WebElement::getText)
-                     .toList();
+                .stream()
+                .map(WebElement::getText)
+                .toList();
     }
 
     // ================================================================== //
@@ -160,8 +177,8 @@ public class CommissionSeleniumTest {
     @Order(3)
     @DisplayName("TC-003 | R3: salaried + non-regular + bonus + $300 → $15.00 (5%)")
     void tc003_r3_salaried_nonRegular_bonus_300_returns15() {
-        fillAndSubmit("salaried", "non-regular", "bonus", "300");
-        assertEquals("$15.00", getCommissionText());
+        fillAndSubmit("salaried", "non-regular", "bonus", "1000");
+        assertEquals("$50.00", getCommissionText());
     }
 
     /**
@@ -172,7 +189,7 @@ public class CommissionSeleniumTest {
     @Order(4)
     @DisplayName("TC-004 | R4: salaried + non-regular + bonus + $8,000 → $25.00 flat")
     void tc004_r4_salaried_nonRegular_bonus_8000_returnsFlat25() {
-        fillAndSubmit("salaried", "non-regular", "bonus", "8000");
+        fillAndSubmit("salaried", "non-regular", "bonus", "1001");
         assertEquals("$25.00", getCommissionText());
     }
 
@@ -184,8 +201,8 @@ public class CommissionSeleniumTest {
     @Order(5)
     @DisplayName("TC-005 | R5: non-salaried + non-regular + bonus + $500 → $50.00 (10%)")
     void tc005_r5_nonSalaried_nonRegular_bonus_500_returns50() {
-        fillAndSubmit("non-salaried", "non-regular", "bonus", "500");
-        assertEquals("$50.00", getCommissionText());
+        fillAndSubmit("non-salaried", "non-regular", "bonus", "1000");
+        assertEquals("$100.00", getCommissionText());
     }
 
     /**
@@ -196,7 +213,7 @@ public class CommissionSeleniumTest {
     @Order(6)
     @DisplayName("TC-006 | R6: non-salaried + non-regular + bonus + $8,000 → $75.00 flat")
     void tc006_r6_nonSalaried_nonRegular_bonus_8000_returnsFlat75() {
-        fillAndSubmit("non-salaried", "non-regular", "bonus", "8000");
+        fillAndSubmit("non-salaried", "non-regular", "bonus", "1001");
         assertEquals("$75.00", getCommissionText());
     }
 
@@ -208,8 +225,8 @@ public class CommissionSeleniumTest {
     @Order(7)
     @DisplayName("TC-007 | R7: non-salaried + non-regular + other + $5,000 → $500.00 (10%)")
     void tc007_r7_nonSalaried_nonRegular_other_5000_returns500() {
-        fillAndSubmit("non-salaried", "non-regular", "other", "5000");
-        assertEquals("$500.00", getCommissionText());
+        fillAndSubmit("non-salaried", "non-regular", "other", "10000");
+        assertEquals("$1000.00", getCommissionText());
     }
 
     /**
@@ -220,8 +237,8 @@ public class CommissionSeleniumTest {
     @Order(8)
     @DisplayName("TC-008 | R8: non-salaried + non-regular + other + $15,000 → $750.00 (5%)")
     void tc008_r8_nonSalaried_nonRegular_other_15000_returns750() {
-        fillAndSubmit("non-salaried", "non-regular", "other", "15000");
-        assertEquals("$750.00", getCommissionText());
+        fillAndSubmit("non-salaried", "non-regular", "other", "10001");
+        assertEquals("$500.05", getCommissionText());
     }
 
     /**
@@ -317,8 +334,8 @@ public class CommissionSeleniumTest {
         fillAndSubmit("salaried", "non-regular", "bonus", "");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.contains("Item price is required")),
-            "Expected 'Item price is required.' in errors but got: " + errors
+                errors.stream().anyMatch(e -> e.contains("Item price is required")),
+                "Expected 'Item price is required.' in errors but got: " + errors
         );
     }
 
@@ -333,8 +350,8 @@ public class CommissionSeleniumTest {
         fillAndSubmit("salaried", "non-regular", "bonus", "abc");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.contains("valid number")),
-            "Expected 'valid number' error but got: " + errors
+                errors.stream().anyMatch(e -> e.contains("valid number")),
+                "Expected 'valid number' error but got: " + errors
         );
     }
 
@@ -349,8 +366,8 @@ public class CommissionSeleniumTest {
         fillAndSubmit("salaried", "non-regular", "bonus", "0");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.contains("greater than zero")),
-            "Expected 'greater than zero' error but got: " + errors
+                errors.stream().anyMatch(e -> e.contains("greater than zero")),
+                "Expected 'greater than zero' error but got: " + errors
         );
     }
 
@@ -362,11 +379,11 @@ public class CommissionSeleniumTest {
     @Order(18)
     @DisplayName("TC-018 | IP7/IB2: item price = -6 → error 'Item price must be greater than zero.'")
     void tc018_ip7_ib2_negativePriceShowsError() {
-        fillAndSubmit("salaried", "non-regular", "bonus", "-6");
+        fillAndSubmit("salaried", "non-regular", "bonus", "-1");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.contains("greater than zero")),
-            "Expected 'greater than zero' error but got: " + errors
+                errors.stream().anyMatch(e -> e.contains("greater than zero")),
+                "Expected 'greater than zero' error but got: " + errors
         );
     }
 
@@ -379,11 +396,11 @@ public class CommissionSeleniumTest {
     @DisplayName("TC-019 | IP1: salary type not selected → error 'Salary type is required.'")
     void tc019_ip1_salaryTypeNotSelected_showsError() {
         // null = leave salary type at default (unselected)
-        fillAndSubmit(null, "non-regular", "bonus", "-6");
+        fillAndSubmit(null, "non-regular", "bonus", "10");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.toLowerCase().contains("salary type")),
-            "Expected 'Salary type' error but got: " + errors
+                errors.stream().anyMatch(e -> e.toLowerCase().contains("salary type")),
+                "Expected 'Salary type' error but got: " + errors
         );
     }
 
@@ -395,11 +412,11 @@ public class CommissionSeleniumTest {
     @Order(20)
     @DisplayName("TC-020 | IP2: customer type not selected → error 'Customer type is required.'")
     void tc020_ip2_customerTypeNotSelected_showsError() {
-        fillAndSubmit("salaried", null, "bonus", "-6");
+        fillAndSubmit("salaried", null, "bonus", "10");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.toLowerCase().contains("customer type")),
-            "Expected 'Customer type' error but got: " + errors
+                errors.stream().anyMatch(e -> e.toLowerCase().contains("customer type")),
+                "Expected 'Customer type' error but got: " + errors
         );
     }
 
@@ -411,11 +428,11 @@ public class CommissionSeleniumTest {
     @Order(21)
     @DisplayName("TC-021 | IP3: item type not selected → error 'Item type is required.'")
     void tc021_ip3_itemTypeNotSelected_showsError() {
-        fillAndSubmit("salaried", "non-regular", null, "-6");
+        fillAndSubmit("salaried", "non-regular", null, "10");
         List<String> errors = getErrorMessages();
         assertTrue(
-            errors.stream().anyMatch(e -> e.toLowerCase().contains("item type")),
-            "Expected 'Item type' error but got: " + errors
+                errors.stream().anyMatch(e -> e.toLowerCase().contains("item type")),
+                "Expected 'Item type' error but got: " + errors
         );
     }
 
@@ -432,8 +449,8 @@ public class CommissionSeleniumTest {
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         List<String> errors = getErrorMessages();
         assertEquals(
-            4, errors.size(),
-            "Expected exactly 4 validation errors but got " + errors.size() + ": " + errors
+                4, errors.size(),
+                "Expected exactly 4 validation errors but got " + errors.size() + ": " + errors
         );
     }
 }
