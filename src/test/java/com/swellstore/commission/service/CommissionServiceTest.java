@@ -55,9 +55,9 @@ class CommissionServiceTest {
     }
 
     @Test
-    @DisplayName("TC-007 | R7: non-salaried + non-regular + other + $15,000 → $1500.00 (10%)")
-    void tc007_r7_nonSalaried_nonRegular_other_price15000_returns1500() {
-        assertEquals(1500.0, calc("non-salaried", "non-regular", "other", 15000.0), DELTA);
+    @DisplayName("TC-007 | R7: non-salaried + non-regular + other + $10,000 → $1000.00 (10%)")
+    void tc007_r7_nonSalaried_nonRegular_other_price10000_returns1000() {
+        assertEquals(1000.0, calc("non-salaried", "non-regular", "other", 10000.0), DELTA);
     }
 
     @Test
