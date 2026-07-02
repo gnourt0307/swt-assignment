@@ -20,7 +20,7 @@ public class CommissionSeleniumTest {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
-    private static final String BASE_URL  = "http://localhost:8085";
+    private static final String BASE_URL  = "http://localhost:8080";
     private static final String INDEX_URL = BASE_URL + "/index.jsp";
 
     @BeforeAll
@@ -100,88 +100,88 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(1)
-    @DisplayName("TC-001 | R1: salaried + regular + standard + $20 → $0.00")
-    void tc001_r1_standard_salaried_regular_zeroCommission() {
+    @DisplayName("TC-01: salaried + regular + standard + $20 => $0.00")
+    void tc01() {
         fillAndSubmit("salaried", "regular", "standard", "20");
         assertEquals("$0.00", getCommissionText());
     }
 
     @Test
     @Order(2)
-    @DisplayName("TC-002 | R2: salaried + regular + bonus + $20 → $0.00")
-    void tc002_r2_regularCustomer_bonus_zeroCommission() {
+    @DisplayName("TC-02: salaried + regular + bonus + $20 => $0.00")
+    void tc02() {
         fillAndSubmit("salaried", "regular", "bonus", "20");
         assertEquals("$0.00", getCommissionText());
     }
 
     @Test
     @Order(3)
-    @DisplayName("TC-003 | R3: salaried + non-regular + bonus + $1,000 → $50.00 (5%)")
-    void tc003_r3_salaried_nonRegular_bonus_300_returns15() {
+    @DisplayName("TC-003: salaried + non-regular + bonus + $1,000 => $50.00 (5%)")
+    void tc03() {
         fillAndSubmit("salaried", "non-regular", "bonus", "1000");
         assertEquals("$50.00", getCommissionText());
     }
 
     @Test
     @Order(4)
-    @DisplayName("TC-004 | R4: salaried + non-regular + bonus + $1,001 → $25.00 flat")
-    void tc004_r4_salaried_nonRegular_bonus_8000_returnsFlat25() {
+    @DisplayName("TC-004: salaried + non-regular + bonus + $1,001 => $25.00 flat")
+    void tc04() {
         fillAndSubmit("salaried", "non-regular", "bonus", "1001");
         assertEquals("$25.00", getCommissionText());
     }
 
     @Test
     @Order(5)
-    @DisplayName("TC-005 | R5: non-salaried + non-regular + bonus + $1,000 → $100.00 (10%)")
-    void tc005_r5_nonSalaried_nonRegular_bonus_500_returns50() {
+    @DisplayName("TC-005: non-salaried + non-regular + bonus + $1,000 => $100.00 (10%)")
+    void tc05() {
         fillAndSubmit("non-salaried", "non-regular", "bonus", "1000");
         assertEquals("$100.00", getCommissionText());
     }
 
     @Test
     @Order(6)
-    @DisplayName("TC-006 | R6: non-salaried + non-regular + bonus + $1,001 → $75.00 flat")
-    void tc006_r6_nonSalaried_nonRegular_bonus_8000_returnsFlat75() {
+    @DisplayName("TC-06: non-salaried + non-regular + bonus + $1,001 => $75.00 flat")
+    void tc06() {
         fillAndSubmit("non-salaried", "non-regular", "bonus", "1001");
         assertEquals("$75.00", getCommissionText());
     }
 
     @Test
     @Order(7)
-    @DisplayName("TC-007 | R7: non-salaried + non-regular + other + $10,000 → $1000.00 (10%)")
-    void tc007_r7_nonSalaried_nonRegular_other_5000_returns500() {
+    @DisplayName("TC-07: non-salaried + non-regular + other + $10,000 => $1000.00 (10%)")
+    void tc07() {
         fillAndSubmit("non-salaried", "non-regular", "other", "10000");
         assertEquals("$1000.00", getCommissionText());
     }
 
     @Test
     @Order(8)
-    @DisplayName("TC-008 | R8: non-salaried + non-regular + other + $10,001 → $500.05 (5%)")
-    void tc008_r8_nonSalaried_nonRegular_other_15000_returns750() {
+    @DisplayName("TC-08: non-salaried + non-regular + other + $10,001 => $500.05 (5%)")
+    void tc08() {
         fillAndSubmit("non-salaried", "non-regular", "other", "10001");
         assertEquals("$500.05", getCommissionText());
     }
 
     @Test
     @Order(9)
-    @DisplayName("TC-009 | R9: salaried + non-regular + other + $8,000 → $0.00")
-    void tc009_r9_salaried_nonRegular_other_zeroCommission() {
+    @DisplayName("TC-09: salaried + non-regular + other + $8,000 => $0.00")
+    void tc09() {
         fillAndSubmit("salaried", "non-regular", "other", "8000");
         assertEquals("$0.00", getCommissionText());
     }
 
     @Test
     @Order(10)
-    @DisplayName("TC-010 | VB1: salaried + non-regular + bonus + $1 (minimum valid) → $0.05 (5%)")
-    void tc010_vb1_minimumPrice_returns0_05() {
+    @DisplayName("TC-10: salaried + non-regular + bonus + $1 => $0.05 (5%)")
+    void tc10() {
         fillAndSubmit("salaried", "non-regular", "bonus", "1");
         assertEquals("$0.05", getCommissionText());
     }
 
     @Test
     @Order(11)
-    @DisplayName("TC-011 | IP4: item price empty → error 'Item price is required.'")
-    void tc011_ip4_emptyPrice_showsRequiredError() {
+    @DisplayName("TC-11: item price empty => error 'Item price is required.'")
+    void tc11() {
         fillAndSubmit("salaried", "non-regular", "bonus", "");
         List<String> errors = getErrorMessages();
         assertTrue(
@@ -192,8 +192,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(12)
-    @DisplayName("TC-012 | IP5: item price 'abc' → error 'Item price must be a valid number.'")
-    void tc012_ip5_nonNumericPrice_showsValidNumberError() {
+    @DisplayName("TC-12: item price 'abc' => error 'Item price must be a valid number.'")
+    void tc12() {
         fillAndSubmit("salaried", "non-regular", "bonus", "abc");
         List<String> errors = getErrorMessages();
         assertTrue(
@@ -204,8 +204,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(13)
-    @DisplayName("TC-013 | IP6/IB1: item price = 0 → error 'Item price must be greater than zero.'")
-    void tc013_ip6_ib1_zeroPriceShowsError() {
+    @DisplayName("TC-13: item price = 0 => error 'Item price must be greater than zero.'")
+    void tc13() {
         fillAndSubmit("salaried", "non-regular", "bonus", "0");
         List<String> errors = getErrorMessages();
         assertTrue(
@@ -216,8 +216,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(14)
-    @DisplayName("TC-014 | IP7/IB2: item price = -1 → error 'Item price must be greater than zero.'")
-    void tc014_ip7_ib2_negativePriceShowsError() {
+    @DisplayName("TC-14: item price = -1 => error 'Item price must be greater than zero.'")
+    void tc14() {
         fillAndSubmit("salaried", "non-regular", "bonus", "-1");
         List<String> errors = getErrorMessages();
         assertTrue(
@@ -228,8 +228,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(15)
-    @DisplayName("TC-015 | IP1: salary type not selected → error 'Salary type is required.'")
-    void tc015_ip1_salaryTypeNotSelected_showsError() {
+    @DisplayName("TC-15: salary type not selected => error 'Salary type is required.'")
+    void tc15() {
         // null = leave salary type at default (unselected)
         fillAndSubmit(null, "non-regular", "bonus", "10");
         List<String> errors = getErrorMessages();
@@ -241,8 +241,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(16)
-    @DisplayName("TC-016 | IP2: customer type not selected → error 'Customer type is required.'")
-    void tc016_ip2_customerTypeNotSelected_showsError() {
+    @DisplayName("TC-16: customer type not selected => error 'Customer type is required.'")
+    void tc16() {
         fillAndSubmit("salaried", null, "bonus", "10");
         List<String> errors = getErrorMessages();
         assertTrue(
@@ -253,8 +253,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(17)
-    @DisplayName("TC-017 | IP3: item type not selected → error 'Item type is required.'")
-    void tc017_ip3_itemTypeNotSelected_showsError() {
+    @DisplayName("TC-17: item type not selected => error 'Item type is required.'")
+    void tc17() {
         fillAndSubmit("salaried", "non-regular", null, "10");
         List<String> errors = getErrorMessages();
         assertTrue(
@@ -265,8 +265,8 @@ public class CommissionSeleniumTest {
 
     @Test
     @Order(18)
-    @DisplayName("TC-018 | IP1+IP2+IP3+IP4: all fields missing → exactly 4 errors displayed")
-    void tc018_allFieldsMissing_showsFourErrors() {
+    @DisplayName("TC-18: all fields missing => 4 errors displayed")
+    void tc18() {
         // Submit without touching any field
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         List<String> errors = getErrorMessages();
