@@ -30,8 +30,6 @@ public class CommissionSeleniumTest {
     @BeforeAll
     static void setUpDriver() {
         ChromeOptions options = new ChromeOptions();
-        // Uncomment to run headless (no browser window):
-        // options.addArguments("--headless", "--disable-gpu");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
